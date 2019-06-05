@@ -1,0 +1,18 @@
+{
+  "name": "vertical",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --open --config webpack.config.js"
+  },
+  "devDependencies": {
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.6.0"
+  },
+  "dependencies": {
+    "css-scroll-snap-polyfill": "^0.1.2"
+  }
+}

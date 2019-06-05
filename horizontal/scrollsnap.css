@@ -1,0 +1,24 @@
+.carousel {
+    /* Ensure that the contents flow horizontally */
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; /* Needed to work on iOS Safari */
+}
+
+/* 2018 spec - For Safari 11, Chrome 69+ */
+.carousel__section {
+    /*scroll-snap-align: start;*/
+    scroll-snap-align: start;
+}
+
+/* Legacy - For Firefox, Edge, IE. Deprecated. Do not use. */
+/*.carousel {*/
+/*    scroll-snap-type: mandatory;*/
+/*    -ms-scroll-snap-type: mandatory;*/
+/*    scroll-snap-points-y: initial;*/
+/*    -ms-scroll-snap-points-y: initial;*/
+/*    scroll-snap-points-x: repeat(100%);*/
+/*    -ms-scroll-snap-points-x: repeat(100%);*/
+/*}*/

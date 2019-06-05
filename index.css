@@ -1,0 +1,35 @@
+/* Just styling here. Nothing to do with scroll-snap. */
+
+html, body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel__section {
+    min-width: 100%;
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+.carousel__section--one {
+    background-color: #e34747;
+}
+
+.carousel__section--two {
+    background-color: #5ab92c;
+}
+
+.carousel__section--three {
+    background-color: #226de2;
+}
