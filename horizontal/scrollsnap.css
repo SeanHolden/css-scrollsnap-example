@@ -1,5 +1,6 @@
 .carousel {
-    /* Ensure that the contents flow horizontally */
+    height: 100vh;
+    width: 100%;
     overflow-x: auto;
     white-space: nowrap;
     display: flex;
