@@ -66,7 +66,7 @@ const scene = controller => ({
                   el,
                   1,
                   {
-                    x: duration * scaleBy,
+                    x: duration * 0.7,
                     y: duration * (1 + scaleBy / 2),
                     scale: 1 + scaleBy,
                     rotation: -45
@@ -86,7 +86,7 @@ const scene = controller => ({
                   el,
                   1,
                   {
-                    x: -duration * scaleBy,
+                    x: -duration * 0.7,
                     y: duration * (1 + scaleBy / 2),
                     scale: 1.5,
                     rotation: 45
