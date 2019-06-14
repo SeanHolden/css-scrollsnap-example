@@ -42,6 +42,10 @@ const main = d => {
     .duration(elOne.clientHeight)
     .move(".carousel__section--three")
     .fromLeft();
+  scene(c)
+    .from(elOne.clientHeight * 2)
+    .duration(DURATION.FOREVER)
+    .pin(".carousel__section--three");
 };
 
 const scene = controller => ({
