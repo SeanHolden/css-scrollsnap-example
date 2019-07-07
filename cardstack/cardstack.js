@@ -58,7 +58,7 @@ const scene = controller => ({
       },
       move: el => ({
         fromRight: () => {
-          const angleDeg = 45;
+          const angleDeg = 30;
           const scale = 2;
           const element = document.querySelector(el);
           const angle = angleDeg * Math.PI / 180;
@@ -74,13 +74,11 @@ const scene = controller => ({
 
           // Work out y position.
           const yDifferenceAfterRotation = heightAfterRotation - originalHeight;
-          const topOfRotatedShapeToLeftPoint = originalWidth / Math.sqrt(2); // Reverse pythagoras theory.
+          const topOfRotatedShapeToLeftPoint = originalWidth * Math.sin(angle); // right triangle vertical leg given angle & hypotenuse
+
           const pointPositionFromBottom = topOfRotatedShapeToLeftPoint - (window.innerHeight * scale);
           const yDifferenceBetweenScreenAndRect = originalHeight - window.innerHeight;
           const correctYPosition = ((yDifferenceAfterRotation/2) - pointPositionFromBottom) - (yDifferenceBetweenScreenAndRect/2);
-
-
-
 
             controller.addScene(
             new ScrollMagic.Scene({ duration, offset })
