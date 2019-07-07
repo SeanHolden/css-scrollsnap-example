@@ -24,10 +24,10 @@ const main = d => {
   const elOne = d.querySelector(".carousel__section--one");
 
   const c = new ScrollMagic.Controller();
-  scene(c)
-    .from(0)
-    .duration(elOne.clientHeight)
-    .pin(".carousel__section--three");
+  // scene(c)
+  //   .from(0)
+  //   .duration(elOne.clientHeight)
+  //   .pin(".carousel__section--three");
   scene(c)
     .from(0)
     .duration(elOne.clientHeight)
@@ -37,15 +37,15 @@ const main = d => {
     .from(elOne.clientHeight)
     .duration(DURATION.FOREVER)
     .pin(".carousel__section--two");
-  scene(c)
-    .from(elOne.clientHeight)
-    .duration(elOne.clientHeight)
-    .move(".carousel__section--three")
-    .fromLeft();
-  scene(c)
-    .from(elOne.clientHeight * 2)
-    .duration(DURATION.FOREVER)
-    .pin(".carousel__section--three");
+  // scene(c)
+  //   .from(elOne.clientHeight)
+  //   .duration(elOne.clientHeight)
+  //   .move(".carousel__section--three")
+  //   .fromLeft();
+  // scene(c)
+  //   .from(elOne.clientHeight * 2)
+  //   .duration(DURATION.FOREVER)
+  //   .pin(".carousel__section--three");
 };
 
 const scene = controller => ({
@@ -58,18 +58,41 @@ const scene = controller => ({
       },
       move: el => ({
         fromRight: () => {
-          const scaleBy = 0.5;
-          controller.addScene(
+          const angleDeg = 45;
+          const scale = 2;
+          const element = document.querySelector(el);
+          const angle = angleDeg * Math.PI / 180;
+          const originalWidth = element.clientWidth * scale;
+          const originalHeight = element.clientHeight * scale;
+          const widthAfterRotation = ((originalWidth * Math.cos(angle)) + (originalHeight * Math.sin(angle)));
+          const heightAfterRotation = ((originalWidth * Math.sin(angle)) + (originalHeight * Math.cos(angle)));
+
+          // Work out x position.
+          const xDifferenceAfterRotation = (widthAfterRotation - originalWidth);
+          const xDifferenceBetweenScreenAndRect = originalWidth - window.innerWidth;
+          const correctXPosition = (originalWidth + ((xDifferenceAfterRotation/2))) - (xDifferenceBetweenScreenAndRect/2);
+
+          // Work out y position.
+          const yDifferenceAfterRotation = heightAfterRotation - originalHeight;
+          const topOfRotatedShapeToLeftPoint = originalWidth / Math.sqrt(2); // Reverse pythagoras theory.
+          const pointPositionFromBottom = topOfRotatedShapeToLeftPoint - (window.innerHeight * scale);
+          const yDifferenceBetweenScreenAndRect = originalHeight - window.innerHeight;
+          const correctYPosition = ((yDifferenceAfterRotation/2) - pointPositionFromBottom) - (yDifferenceBetweenScreenAndRect/2);
+
+
+
+
+            controller.addScene(
             new ScrollMagic.Scene({ duration, offset })
               .setTween(
                 TweenMax.fromTo(
                   el,
                   1,
                   {
-                    x: duration * 0.7,
-                    y: duration * (1 + scaleBy / 2),
-                    scale: 1 + scaleBy,
-                    rotation: -45
+                    x: correctXPosition - (window.innerWidth/2),
+                    y: correctYPosition - (window.innerHeight/2),
+                    scale,
+                    rotation: -angleDeg
                   },
                   defaultElementPosition()
                 )
@@ -78,7 +101,6 @@ const scene = controller => ({
           );
         },
         fromLeft: () => {
-          const scaleBy = 0.5;
           controller.addScene(
             new ScrollMagic.Scene({ duration, offset })
               .setTween(
@@ -86,8 +108,8 @@ const scene = controller => ({
                   el,
                   1,
                   {
-                    x: -duration * 0.7,
-                    y: duration * (1 + scaleBy / 2),
+                    x: 0,
+                    y: duration * 1.25,
                     scale: 1.5,
                     rotation: 45
                   },
