@@ -1,5 +1,5 @@
 html, body {
-    height: 200vh; /* <-- ensure this is the exact size of all elements combined */
+    height: 300vh; /* <-- ensure this is the exact size of all elements combined */
     margin: 0;
     padding: 0;
 }
