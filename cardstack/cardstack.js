@@ -24,43 +24,83 @@ const main = () => {
   awesomeScroll([
     ".carousel__section--one",
     ".carousel__section--two",
-    ".carousel__section--three"
+    ".carousel__section--three",
+    ".carousel__section--four",
+    ".carousel__section--five"
   ]);
 };
 
-const awesomeScroll = (selectors) => {
-  const elOne = window.document.querySelector(".carousel__section--one");
+const awesomeScroll = selectors => {
+  // first item is fixed, rest are absolute
+  const elements = selectors.map((selector, i) => {
+    const el = window.document.querySelector(selector);
+    if (i === 0) {
+      el.style.position = "fixed";
+    } else {
+      el.style.position = "absolute";
+    }
+    return el;
+  });
 
   const c = new ScrollMagic.Controller();
-  scene(c)
-    .from(0)
-    .duration(elOne.clientHeight)
-    .pin(".carousel__section--three");
+  // pin everything except the first two items.
+  // pin each item for the sum of all previous elements (except first).
 
-  scene(c)
-    .from(0)
-    .duration(elOne.clientHeight)
-    .move(".carousel__section--two")
-    .fromRight();
-  scene(c)
-    .from(elOne.clientHeight)
-    .duration(DURATION.FOREVER)
-    .pin(".carousel__section--two");
+  // create copy of selectors & elements.
+  let selectorsClone = [...selectors];
+  let elementsClone = [...elements];
+  // remove first two.
+  selectorsClone = selectorsClone.slice(2);
+  elementsClone = elementsClone.slice(2);
+  // convert elements to just their height values.
+  const elHeights = elementsClone.map(element => element.clientHeight);
+  // reverse them.
+  selectorsClone.reverse();
+  elHeights.reverse();
 
-  scene(c)
-    .from(elOne.clientHeight)
-    .duration(elOne.clientHeight)
-    .move(".carousel__section--three")
-    .fromLeft();
-  scene(c)
-    .from(elOne.clientHeight)
-    .duration(DURATION.FOREVER)
-    .pin(".carousel__section--three");
+  // commence pinning for correct durations.
+  selectorsClone.forEach(selector => {
+    const sumOfAllElementHeights = elHeights.reduce((acc, val) => acc + val);
+    scene(c)
+      .from(0)
+      .duration(sumOfAllElementHeights)
+      .pin(selector);
+    elHeights.pop();
+  });
+
+  // move elements in right, left, right left.
+  // pin when in correct position.
+  let selectorsClone2 = [...selectors];
+  let elementsClone2 = [...elements];
+
+  // remove first element as that does not need to move.
+  selectorsClone2 = selectorsClone2.slice(1);
+  elementsClone2 = elementsClone2.slice(1);
+
+  // loop through each element and set their move and pin attributes.
+  selectorsClone2.forEach((selector, i) => {
+    let from = elementsClone2[i].clientHeight * i; // assumes all elements are exact same height
+    const duration = elementsClone2[i].clientHeight;
+    const direction = i % 2 === 0 ? "fromRight" : "fromLeft";
+    // move
+    scene(c)
+      .from(from)
+      .duration(duration)
+      .move(selector)
+      [direction]();
+
+    // pin once in position
+    from = elementsClone2[i].clientHeight * (i+1);
+    scene(c)
+      .from(from)
+      .duration(DURATION.FOREVER)
+      .pin(selector);
+  });
 };
 
 const scene = controller => {
   const angleDeg = 50;
-  const scale = 2;
+  const scale = 3;
   const angle = (angleDeg * Math.PI) / 180;
 
   return {

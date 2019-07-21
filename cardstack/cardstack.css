@@ -1,5 +1,5 @@
 html, body {
-    height: 300vh; /* <-- ensure this is the exact size of all elements combined */
+    height: 500vh; /* <-- ensure this is the exact size of all elements combined */
     margin: 0;
     padding: 0;
 }
@@ -38,16 +38,21 @@ html, body {
 
 .carousel__section--one {
     background-color: #e34747;
-    position: fixed;
 }
 
 .carousel__section--two {
     background-color: #5ab92c;
-    position: absolute;
 }
 
 .carousel__section--three {
     background-color: #226de2;
-    position: absolute;
+}
+
+.carousel__section--four {
+    background-color: #e24bd7;
+}
+
+.carousel__section--five {
+    background-color: #dae237;
 }
 
